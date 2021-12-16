@@ -1,7 +1,7 @@
 package Projects.ATM;
 import java.util.Scanner;
 
-public class MenuDuplicateTest extends dataBaseMySQL {
+public class Menu extends dataBaseMySQL {
     Scanner scan = new Scanner(System.in);
     public void start() {
         System.out.println("-------------------------ATM-------------------------");

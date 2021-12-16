@@ -100,7 +100,7 @@ public class dataBaseMySQL extends Account {
                             System.out.println("Successfully logged in!");
                             resultSet = statement.executeQuery(sql);
                             if (resultSet.next()) {
-                                System.out.println("Welcome: " + resultSet.getString(3));
+                                System.out.println("Welcome: " + resultSet.getString(4));
                                 justLines();
                                 setUser(inputUser);
                                 setPassword(inputPass);

@@ -2,7 +2,7 @@ package Projects.ATM;
 
 public class ATM {
     public static void main(String[] args) {
-        MenuDuplicateTest atm = new MenuDuplicateTest();
+        Menu atm = new Menu();
         atm.start();
     }
 }
