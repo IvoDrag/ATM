@@ -1,4 +1,3 @@
-package Projects.ATM;
 import java.util.Scanner;
 
 public class Menu extends dataBaseMySQL {

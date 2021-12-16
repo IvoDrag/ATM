@@ -1,5 +1,3 @@
-package Projects.ATM;
-
 public class Account  {
     private String user_Name;
     private String password;
@@ -26,7 +24,7 @@ public class Account  {
         System.out.println("2. Deposit money");
         System.out.println("3. Withdraw money");
         System.out.println("4. Delete account!");
-        System.out.println("5. Exit");
+        System.out.println("5. Exit from account");
         System.out.println();
     }
 

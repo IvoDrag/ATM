@@ -1,5 +1,3 @@
-package Projects.ATM;
-
 import java.sql.*;
 import java.util.Scanner;
 
@@ -157,7 +155,7 @@ public class dataBaseMySQL extends Account {
 
             resultSet = statement.executeQuery("select * from bank_table where User_Name='" + getUser() + "'");
             if (resultSet.next()) {
-                balance = resultSet.getDouble(6);
+                balance = resultSet.getDouble(7);
             }
 
             System.out.print("How much money do you want to deposit: ");
@@ -189,7 +187,7 @@ public class dataBaseMySQL extends Account {
 
             resultSet = statement.executeQuery("select * FROM bank_table where User_Name='" + getUser() + "'");
             if (resultSet.next()) {
-                nowBalance = resultSet.getDouble(6);
+                nowBalance = resultSet.getDouble(7);
             }
             justLines();
             System.out.println("Your balance: " + nowBalance);
