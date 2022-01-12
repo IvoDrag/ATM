@@ -5,6 +5,7 @@ public class dataBaseMySQL extends Account {
     private final String url = "jdbc:mysql://localhost:3306/bank_db";
     private final String user = "root";
     private final String passwordDB = "password123";
+    
     private final Scanner scan = new Scanner(System.in);
 
     private Connection connection;
