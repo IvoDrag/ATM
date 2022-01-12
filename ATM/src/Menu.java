@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class Menu extends dataBaseMySQL {
     Scanner scan = new Scanner(System.in);
     public void start() {
@@ -8,11 +9,13 @@ public class Menu extends dataBaseMySQL {
         int inputOptionLevelTwo;
 
         boolean flagMenu = true;
+        
         boolean flagAccountMenu = true;
         do {
             firstMenuOptions();
             System.out.print("Option: ");
             inputOptionLevelOne = Integer.parseInt(scan.nextLine());
+            
             switch(inputOptionLevelOne) {
                 case 1:
                     createAccount();
@@ -52,7 +55,6 @@ public class Menu extends dataBaseMySQL {
                         }
                     }while(flagAccountMenu);
 
-
                     break;
                 case 0:
                     System.out.println("Thank you for using ATM!");
@@ -61,7 +63,6 @@ public class Menu extends dataBaseMySQL {
                 default:
                     System.out.println("Invalid option! Try again!");
                     break;
-
             }
         }while(flagMenu);
     }
