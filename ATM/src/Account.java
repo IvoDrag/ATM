@@ -2,6 +2,7 @@ public class Account  {
     private String user_Name;
     private String password;
 
+    
     public String getUser() {
         return user_Name;
     }
@@ -17,6 +18,7 @@ public class Account  {
         System.out.println("0. Exit");
         System.out.println();
     }
+    
 
     public void accountOptions() {
         System.out.println();
@@ -32,4 +34,5 @@ public class Account  {
         System.out.println("----------------------------------------");
     }
 
+    
 }
