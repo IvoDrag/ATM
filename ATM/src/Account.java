@@ -30,6 +30,7 @@ public class Account {
         this.balance = balance;
     }
 
+    // Getters and Setters
     /*
     public Integer getId() {
         return id;
@@ -87,13 +88,4 @@ public class Account {
         this.balance = balance;
     }
     */
-    //    public void accountOptions() {
-//        System.out.println();
-//        System.out.println("1. Account information");
-//        System.out.println("2. Deposit money");
-//        System.out.println("3. Withdraw money");
-//        System.out.println("4. Delete account!");
-//        System.out.println("5. Exit from account");
-//        System.out.println();
-//  }
 }
