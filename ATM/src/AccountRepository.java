@@ -7,14 +7,14 @@ public class AccountRepository {
     private ResultSet resultSet;
 
     public AccountRepository(String url, String root, String password) {
-        this.connection = establishConnection(url,root,password);
+        this.connection = establishConnection(url, root, password);
     }
 
     private Connection establishConnection(String url, String root, String password) {
         try {
             this.connection = DriverManager.getConnection(url, root, password);
             statement = connection.createStatement();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return connection;
@@ -36,9 +36,8 @@ public class AccountRepository {
         return account;
     }
 
-
-    public Account getAccountFromDB(Account account, ResultSet resultSet) throws SQLException {
-        while(resultSet.next()) {
+    private Account getAccountFromDB(Account account, ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
             account.setId(resultSet.getInt("ID"));
             account.setUserName(resultSet.getString("UserName"));
             account.setUserPassword(resultSet.getString("UserPassword"));
@@ -50,7 +49,6 @@ public class AccountRepository {
         return account;
     }
 
-
     public Account logIn(Account account, String inputUserName, String inputUserPassword) {
         try {
             String sqlString = "SELECT * FROM bank_table WHERE UserName=? AND UserPassword=?";
@@ -58,7 +56,7 @@ public class AccountRepository {
             login.setString(1, inputUserName);
             login.setString(2, inputUserPassword);
             resultSet = login.executeQuery();
-            account = getAccountFromDB(account,resultSet);
+            account = getAccountFromDB(account, resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,61 +67,53 @@ public class AccountRepository {
         try {
             resultSet = statement.executeQuery("SELECT * FROM bank_table WHERE UserName='" + account.getUserName() + "'");
             account = getAccountFromDB(account, resultSet);
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return account;
     }
 
-    //                  ??????
     public boolean deposit(Account account, double money) {
-        try{
+        try {
             preparedStatement = connection.prepareStatement("UPDATE bank_table SET Balance = ? WHERE UserName='" + account.getUserName() + "'");
             preparedStatement.setDouble(1, money);
-            if(preparedStatement.executeUpdate() == 1) {
+            if (preparedStatement.executeUpdate() == 1) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-
-    // DONE
     public boolean withdraw(Account account, double money) {
         try {
             preparedStatement = connection.prepareStatement("UPDATE bank_table SET Balance = ? WHERE UserName='" + account.getUserName() + "'");
-            preparedStatement.setDouble(1,money);
-            if(preparedStatement.executeUpdate() == 1) {
+            preparedStatement.setDouble(1, money);
+            if (preparedStatement.executeUpdate() == 1) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    // NEED TO REPAIR
     public boolean delete(Account account) {
-        try{
+        try {
             preparedStatement = connection.prepareStatement("DELETE FROM bank_table WHERE UserName='" + account.getUserName() + "'");
-            if(preparedStatement.executeUpdate() == 1) {
+            if (preparedStatement.executeUpdate() == 1) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
-
 }

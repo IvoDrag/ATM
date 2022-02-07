@@ -1,4 +1,3 @@
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,8 +13,6 @@ public class Account {
     private String lastName;
     private String address;
     private double balance;
-    //private double deposit;
-    //private double withdraw;
 
     public Account(String userName, String userPassword) {
         this.userName = userName;

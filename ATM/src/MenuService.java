@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -7,7 +6,8 @@ public class MenuService {
     private BankService bankService;
     private Account account;
 
-    public MenuService() {}
+    public MenuService() {
+    }
 
     public MenuService(BankService bankService) {
         this.bankService = bankService;
@@ -24,14 +24,14 @@ public class MenuService {
         String lastname = scan.nextLine();
         System.out.print("Enter Address: ");
         String address = scan.nextLine();
-        return new Account(user,pass,firstname,lastname,address,0);
+        return new Account(user, pass, firstname, lastname, address, 0);
     }
 
     public boolean confirmForAccCreation() {
         System.out.println("Are you sure that you want to create this Account? (yes/no)");
         String choice = scan.nextLine();
         choice = choice.toLowerCase(Locale.ROOT);
-        switch(choice) {
+        switch (choice) {
             case "yes":
                 return true;
             case "no":
@@ -60,22 +60,19 @@ public class MenuService {
     }
 
     public boolean optionDelete() {
-        boolean flag = true;
         System.out.println("Are you sure you want to delete your Account: " + account.getUserName() + "? (yes/no)?");
         do {
             String option = scan.nextLine();
             option = option.toLowerCase(Locale.ROOT);
-            if(option.equals("yes")) {
+            if (option.equals("yes")) {
                 return true;
-            }
-            else if(option.equals("no")) {
+            } else if (option.equals("no")) {
                 System.out.println("Account will NOT be deleted!");
                 return false;
-            }
-            else {
+            } else {
                 System.out.println("Invalid choice!" + '\n' + "Enter (yes/no)!");
             }
-        }while(true);
+        } while (true);
     }
 
     public double depositFunction(Account account, double money) {
@@ -117,20 +114,20 @@ public class MenuService {
                     String inputUserName = scan.nextLine();
                     System.out.print("Enter password: ");
                     String inputUserPassword = scan.nextLine();
-                    if(bankService.logInAccount(account, inputUserName, inputUserPassword) != null) {
+                    if (bankService.logInAccount(account, inputUserName, inputUserPassword) != null) {
                         do {
                             accountOptions();
                             System.out.print("Choose option: ");
                             inputOptionLevelTwo = Integer.parseInt(scan.nextLine());
                             switch (inputOptionLevelTwo) {
                                 case 1:
-                                    bankService.accountInfo(account);
                                     // Account information!
+                                    bankService.accountInfo(account);
                                     break;
                                 case 2:
                                     // Deposit money!
                                     depositValue = depositFunction(account, depositValue);
-                                    bankService.depositMoney(account,depositValue);
+                                    bankService.depositMoney(account, depositValue);
                                     break;
                                 case 3:
                                     // Withdraw money!
@@ -139,7 +136,7 @@ public class MenuService {
                                     break;
                                 case 4:
                                     // Delete account!
-                                    if(optionDelete()) {
+                                    if (optionDelete()) {
                                         bankService.deleteAccount(account);
                                     }
                                     flagLevelTwo = false;
@@ -149,7 +146,7 @@ public class MenuService {
                                     flagLevelTwo = false;
                                     break;
                             }
-                        }while(flagLevelTwo);
+                        } while (flagLevelTwo);
                     }
                     break;
                 case 0:
@@ -157,6 +154,6 @@ public class MenuService {
                     flagLevelOne = false;
                     break;
             }
-        }while(flagLevelOne);
+        } while (flagLevelOne);
     }
 }
