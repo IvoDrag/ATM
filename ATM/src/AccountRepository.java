@@ -34,20 +34,37 @@ public class AccountRepository {
             preparedStatement.setString(4, account.getLastName());
             preparedStatement.setString(5, account.getAddress());
             preparedStatement.setDouble(6, account.getBalance());
-            bankService.checkIfAccountCreated(preparedStatement);
-        }catch(Exception e) {
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return account;
     }
 
-    public Account logIn(Account account) {
-        bankService = new BankService();
+
+    public Account getAccountFromDB(Account account, ResultSet resultSet) throws SQLException {
+        while(resultSet.next()) {
+            account.setId(resultSet.getInt("ID"));
+            account.setUserName(resultSet.getString("UserName"));
+            account.setUserPassword(resultSet.getString("UserPassword"));
+            account.setFirstName(resultSet.getString("FirstName"));
+            account.setLastName(resultSet.getString("LastName"));
+            account.setAddress(resultSet.getString("Address"));
+            account.setBalance(resultSet.getDouble("Balance"));
+        }
+        return account;
+    }
+
+
+    public Account logIn(Account account, String inputUserName, String inputUserPassword) {
         try {
-            String userNameSearch = "SELECT * FROM bank_table WHERE UserName='" + account.getUserName() + "'";
-            String userPasswordSearch = "SELECT * FROM bank_table WHERE UserPassword='" + account.getUserPassword() + "'";
-            account = bankService.checkIfThereIsAccount(userNameSearch,userPasswordSearch,account,resultSet,statement);
-        }catch(Exception e) {
+            String sqlString = "SELECT * FROM bank_table WHERE UserName=? AND UserPassword=?";
+            PreparedStatement login = connection.prepareStatement(sqlString);
+            login.setString(1, inputUserName);
+            login.setString(2, inputUserPassword);
+            resultSet = login.executeQuery();
+            account = getAccountFromDB(account,resultSet);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return account;
@@ -56,31 +73,32 @@ public class AccountRepository {
     public Account printAccountInfo(Account account) {
         try {
             resultSet = statement.executeQuery("SELECT * FROM bank_table WHERE UserName='" + account.getUserName() + "'");
-            while(resultSet.next()) {
-                account.setId(resultSet.getInt("ID"));
-                account.setUserName(resultSet.getString("UserName"));
-                account.setUserPassword(resultSet.getString("UserPassword"));
-                account.setFirstName(resultSet.getString("FirstName"));
-                account.setLastName(resultSet.getString("LastName"));
-                account.setAddress(resultSet.getString("Address"));
-                account.setBalance(resultSet.getDouble("Balance"));
-            }
+            account = getAccountFromDB(account, resultSet);
         }catch(Exception e) {
             e.printStackTrace();
         }
         return account;
     }
 
-    public void deposit(Account account, double money) {
+    //                  ??????
+    public boolean deposit(Account account, double money) {
         try{
             preparedStatement = connection.prepareStatement("UPDATE bank_table SET Balance = ? WHERE UserName='" + account.getUserName() + "'");
             preparedStatement.setDouble(1, money);
-            bankService.checkIfSuccessfulDeposit(account,preparedStatement,money);
+            if(preparedStatement.executeUpdate() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }catch(Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
+
+    // NEED TO REPAIR
     public void withdraw(Account account, double money) {
         try {
             preparedStatement = connection.prepareStatement("UPDATE bank_table SET Balance = ? WHERE UserName='" + account.getUserName() + "'");
@@ -91,6 +109,7 @@ public class AccountRepository {
         }
     }
 
+    // NEED TO REPAIR
     public void delete(Account account) {
         try{
             preparedStatement = connection.prepareStatement("DELETE FROM bank_table WHERE UserName='" + account.getUserName() + "'");

@@ -26,16 +26,16 @@ public class MenuService {
         String address = scan.nextLine();
         return new Account(user,pass,firstname,lastname,address,0);
     }
-
-    public Account userLogIn() {
-        System.out.print("Enter your user name: ");
-        String user = scan.nextLine();
-        account.setUserName(user);
-        System.out.print("Enter your password: ");
-        String pass = scan.nextLine();
-        account.setUserPassword(pass);
-        return new Account(user,pass);
-    }
+//
+//    public Account userLogIn() {
+//        System.out.print("Enter your user name: ");
+//        String user = scan.nextLine();
+//        account.setUserName(user);
+//        System.out.print("Enter your password: ");
+//        String pass = scan.nextLine();
+//        account.setUserPassword(pass);
+//        return new Account(user,pass);
+//    }
 
     public boolean confirmForAccCreation() {
         System.out.println("Are you sure that you want to create this Account? (yes/no)");
@@ -65,7 +65,7 @@ public class MenuService {
         System.out.println("2. Deposit money");
         System.out.println("3. Withdraw money");
         System.out.println("4. Delete account!");
-        System.out.println("5. Exit from account");
+        System.out.println("0. Exit from account");
         System.out.println();
     }
 
@@ -124,39 +124,44 @@ public class MenuService {
                     break;
                 case 2:
                     // Log in Account!
-                    account = bankService.logInAccount(userLogIn());
-                    do {
-                        accountOptions();
-                        System.out.print("Choose option: ");
-                        inputOptionLevelTwo = Integer.parseInt(scan.nextLine());
-                        switch (inputOptionLevelTwo) {
-                            case 1:
-                                bankService.accountInfo(account);
-                                // Account information!
-                                break;
-                            case 2:
-                                // Deposit money!
-                                depositValue = depositFunction(account, depositValue);
-                                bankService.depositMoney(account,depositValue);
-                                break;
-                            case 3:
-                                // Withdraw money!
-                                withdrawValue = withDrawFunction(account, withdrawValue);
-                                bankService.withdrawMoney(account, withdrawValue);
-                                break;
-                            case 4:
-                                // Delete account!
-                                if(optionDelete()) {
-                                    bankService.deleteAccount(account);
-                                }
-                                flagLevelTwo = false;
-                                break;
-                            case 5:
-                                // Exit from account!
-                                flagLevelTwo = false;
-                                break;
-                        }
-                    }while(flagLevelTwo);
+                    System.out.print("Enter user name: ");
+                    String inputUserName = scan.nextLine();
+                    System.out.print("Enter password: ");
+                    String inputUserPassword = scan.nextLine();
+                    if(bankService.logInAccount(account, inputUserName, inputUserPassword) != null) {
+                        do {
+                            accountOptions();
+                            System.out.print("Choose option: ");
+                            inputOptionLevelTwo = Integer.parseInt(scan.nextLine());
+                            switch (inputOptionLevelTwo) {
+                                case 1:
+                                    bankService.accountInfo(account);
+                                    // Account information!
+                                    break;
+                                case 2:
+                                    // Deposit money!
+                                    depositValue = depositFunction(account, depositValue);
+                                    bankService.depositMoney(account,depositValue);
+                                    break;
+                                case 3:
+                                    // Withdraw money!
+                                    withdrawValue = withDrawFunction(account, withdrawValue);
+                                    bankService.withdrawMoney(account, withdrawValue);
+                                    break;
+                                case 4:
+                                    // Delete account!
+                                    if(optionDelete()) {
+                                        bankService.deleteAccount(account);
+                                    }
+                                    flagLevelTwo = false;
+                                    break;
+                                case 0:
+                                    // Exit from account!
+                                    flagLevelTwo = false;
+                                    break;
+                            }
+                        }while(flagLevelTwo);
+                    }
                     break;
                 case 0:
                     System.out.println("Thank you for using ATM!");
