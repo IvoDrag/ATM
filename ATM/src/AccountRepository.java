@@ -5,11 +5,6 @@ public class AccountRepository {
     private Statement statement;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private BankService bankService;
-
-    public AccountRepository() {
-        this.bankService = new BankService();
-    }
 
     public AccountRepository(String url, String root, String password) {
         this.connection = establishConnection(url,root,password);
@@ -98,25 +93,37 @@ public class AccountRepository {
     }
 
 
-    // NEED TO REPAIR
-    public void withdraw(Account account, double money) {
+    // DONE
+    public boolean withdraw(Account account, double money) {
         try {
             preparedStatement = connection.prepareStatement("UPDATE bank_table SET Balance = ? WHERE UserName='" + account.getUserName() + "'");
             preparedStatement.setDouble(1,money);
-            bankService.checkIfSuccessfulWithdraw(account,preparedStatement,money);
+            if(preparedStatement.executeUpdate() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }catch(Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     // NEED TO REPAIR
-    public void delete(Account account) {
+    public boolean delete(Account account) {
         try{
             preparedStatement = connection.prepareStatement("DELETE FROM bank_table WHERE UserName='" + account.getUserName() + "'");
-            bankService.checkIfAccountIsDeleted(preparedStatement);
+            if(preparedStatement.executeUpdate() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }catch(Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 }

@@ -26,16 +26,6 @@ public class MenuService {
         String address = scan.nextLine();
         return new Account(user,pass,firstname,lastname,address,0);
     }
-//
-//    public Account userLogIn() {
-//        System.out.print("Enter your user name: ");
-//        String user = scan.nextLine();
-//        account.setUserName(user);
-//        System.out.print("Enter your password: ");
-//        String pass = scan.nextLine();
-//        account.setUserPassword(pass);
-//        return new Account(user,pass);
-//    }
 
     public boolean confirmForAccCreation() {
         System.out.println("Are you sure that you want to create this Account? (yes/no)");
@@ -70,11 +60,10 @@ public class MenuService {
     }
 
     public boolean optionDelete() {
-        String option;
         boolean flag = true;
         System.out.println("Are you sure you want to delete your Account: " + account.getUserName() + "? (yes/no)?");
         do {
-            option = scan.nextLine();
+            String option = scan.nextLine();
             option = option.toLowerCase(Locale.ROOT);
             if(option.equals("yes")) {
                 return true;
@@ -100,7 +89,7 @@ public class MenuService {
     public double withDrawFunction(Account account, double money) {
         System.out.println();
         System.out.println("Balance now: " + account.getBalance());
-        System.out.println("How much money do you want to withdraw: ");
+        System.out.print("How much money do you want to withdraw: ");
         money = Double.parseDouble(scan.nextLine());
         return money;
     }
