@@ -1,9 +1,5 @@
 
 
-                                                          ** THE PROJECT IS UNDER MAINTENANCE **
-
-
-
 
 This **ATM Project** created by me is a **Console Application** at the moment. 
 
